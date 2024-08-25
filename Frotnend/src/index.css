@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.leaflet-top , .leaflet-left{
+    bottom: 10px; /* Adjust as needed */
+    left: 10px;  /* Adjust as needed */
+    top: auto;    /* Reset top positioning */
+    left: auto;   /* Reset left positioning */
+}
+.leaflet-control-attribution {
+    display: none;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
