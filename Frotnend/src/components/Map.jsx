@@ -9,7 +9,6 @@ import {
 } from "react-leaflet";
 import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import "leaflet/dist/leaflet.css";
-import { Detail } from "./detail"; // Assuming this is a component
 import L from "leaflet";
 import useGeoLocation from "../hooks/useGeolocation";
 import { customIcon } from "./hoem";
@@ -78,9 +77,17 @@ const Map = () => {
   const [reporting, setReporting] = useState(false);
   const { load, SendReport } = usereport();
   const {loading,  heatdata } = useGetHeatmap();
+  const location = useGeoLocation();
 
-  const initialCenter = defaultCenter;
-
+  if (location.permission === "denied") {
+    toast.error("Please enable location services.");
+  } else if (location.permission === "unsupported") {
+    toast.error("Location services are not supported by your browser.");
+  } else if (location.error) {
+    toast.error("Error:", location.error.message);
+  } 
+    const initialCenter = [location.coordinates.lat, location.coordinates.lng];
+  
   const toggleReporting = () => {
     setReporting(!reporting);
 
@@ -191,7 +198,7 @@ const Map = () => {
             bgColor={reporting}
           />
 
-          <Detail />
+          
         </MapContainer> 
       
 
