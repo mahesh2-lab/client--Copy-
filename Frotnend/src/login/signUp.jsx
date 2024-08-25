@@ -3,9 +3,13 @@ import React from "react";
 import useSignup from "../hooks/useSignup";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import { Input, Select, Option } from "@material-tailwind/react";
 import { Helmet } from "react-helmet";
+import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
 export const SignUp = () => {
+  const [passwordShown, setPasswordShown] = useState(false);
+  const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
   const { loading, Signup } = useSignup();
 
   const [inputs, setInputs] = useState({
@@ -19,14 +23,15 @@ export const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log(inputs);
     await Signup(inputs);
   };
 
   return (
     <>
-    <Helmet>
+      <Helmet>
         <title>HerGuard - SignUp</title>
-    </Helmet>
+      </Helmet>
       <section className="bg-white">
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
           <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
@@ -97,126 +102,93 @@ export const SignUp = () => {
                 className="mt-8 grid grid-cols-6 gap-6"
               >
                 <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="FirstName"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    First Name
-                  </label>
-
-                  <input
-                    type="text"
-                    id="FirstName"
-                    name="first_name"
+                  <Input
+                    label="First Name"
+                    required
                     value={inputs.firstName}
                     onChange={(e) =>
                       setInputs({ ...inputs, firstName: e.target.value })
                     }
-                    className="mt-1 h-9 w-full  rounded-md border-gray-200 border bg-white text-lg px-3 text-gray-700 shadow-sm"
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="LastName"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Last Name
-                  </label>
-
-                  <input
-                    type="text"
-                    id="LastName"
-                    name="last_name"
+                  <Input
+                    label="Last Name"
+                    required
                     value={inputs.lastName}
                     onChange={(e) =>
                       setInputs({ ...inputs, lastName: e.target.value })
                     }
-                    className="mt-1 w-full px-3 h-9 border rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="Email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    {" "}
-                    Email{" "}
-                  </label>
-
-                  <input
+                  <Input
+                    label="Email"
+                    required
                     type="email"
-                    id="Email"
-                    name="email"
                     value={inputs.email}
                     onChange={(e) =>
                       setInputs({ ...inputs, email: e.target.value })
                     }
-                    className="mt-1 w-full px-3 h-9 border rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="gender"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    {" "}
-                    Gender{" "}
-                  </label>
-                  <select
-                    name="gender"
-                    id="gender"
+                  <Select
+                    label="Gender"
                     value={inputs.gender}
-                    onChange={(e) =>
-                      setInputs({ ...inputs, gender: e.target.value })
+                    onChange={(e) =>{
+                      setInputs({ ...inputs, gender: e})
                     }
-                    className="mt-1 w-full px-3 h-9 border rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    }
                   >
-                    <option value="female">Female</option>
-                    <option value="male">Male</option>
-                  </select>
+                    <Option value="female">Female</Option>
+                    <Option value="male">Male</Option>
+                  </Select>
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="Password"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    {" "}
-                    Password{" "}
-                  </label>
-
-                  <input
-                    type="password"
-                    id="Password"
-                    name="password"
+                  <Input
+                    size="lg"
+                    placeholder="********"
+                    label="Password"
                     value={inputs.password}
                     onChange={(e) =>
                       setInputs({ ...inputs, password: e.target.value })
                     }
-                    className="mt-1 w-full px-3 h-9 border rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    type={passwordShown ? "text" : "password"}
+                    icon={
+                      <i onClick={togglePasswordVisiblity}>
+                        {passwordShown ? (
+                          <EyeIcon className="h-5 w-5" />
+                        ) : (
+                          <EyeSlashIcon className="h-5 w-5" />
+                        )}
+                      </i>
+                    }
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="PasswordConfirmation"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Password Confirmation
-                  </label>
-
-                  <input
-                    type="password"
-                    id="PasswordConfirmation"
-                    name="password_confirmation"
+                  <Input
+                    placeholder="********"
+                    label="Confirm Password"
                     value={inputs.confirmPassword}
                     onChange={(e) =>
                       setInputs({ ...inputs, confirmPassword: e.target.value })
                     }
-                    className="mt-1 w-full px-3 h-9 border rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    type={passwordShown ? "text" : "password"}
+                    icon={
+                      <i onClick={togglePasswordVisiblity}>
+                        {passwordShown ? (
+                          <EyeIcon className="h-5 w-5" />
+                        ) : (
+                          <EyeSlashIcon className="h-5 w-5" />
+                        )}
+                      </i>
+                    }
                   />
                 </div>
 
