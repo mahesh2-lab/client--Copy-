@@ -6,7 +6,10 @@ const FloatingNavBar = ({ onSearch, suggestions = [], fetchSuggestions }) => {
   const [place, setPlace] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [debouncedQuery, setDebouncedQuery] = useState("");
+<<<<<<< HEAD
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+=======
+>>>>>>> 7ac991d (uy)
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -29,10 +32,13 @@ const FloatingNavBar = ({ onSearch, suggestions = [], fetchSuggestions }) => {
     setShowSuggestions(false);
   };
 
+<<<<<<< HEAD
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
 
+=======
+>>>>>>> 7ac991d (uy)
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedQuery(place);
@@ -50,6 +56,7 @@ const FloatingNavBar = ({ onSearch, suggestions = [], fetchSuggestions }) => {
   }, [debouncedQuery, fetchSuggestions]);
 
   return (
+<<<<<<< HEAD
     <div className="absolute w-[97%]  cursor-pointer top-5 left-1/2 opacity-90 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] transform -translate-x-1/2 flex border border-[#FAF7F7] backdrop-blur-sm bg-[#E5E4E4] bg-opacity-80 rounded-[17px] shadow-md p-2 z-[1000]">
       <div className="flex items-center w-full justify-between">
         <div className="ml-4 flex items-center">
@@ -59,6 +66,16 @@ const FloatingNavBar = ({ onSearch, suggestions = [], fetchSuggestions }) => {
             <form onSubmit={handleSubmit} className="relative">
               <input
                 className="border-2 border-[#FFFFFF] bg-[#F3E9E9] w-full lg:w-[500px] md:w-[400px] sm:w-[200px] placeholder:text-blue-gray-900 h-10 px-5 pr-16 rounded-[10px] text-base focus:outline-none"
+=======
+    <div className="absolute w-[97%] h-20 cursor-pointer top-5 left-1/2 opacity-90 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] transform -translate-x-1/2 flex border border-[#FAF7F7] backdrop-blur-sm bg-[#E5E4E4] bg-opacity-80 rounded-[17px] shadow-md p-2 z-[1000]">
+      <div className="flex items-center w-full justify-between">
+        <div className="ml-4 flex items-center">
+          <img src="logo.svg" className="h-11 w-11" alt="Logo" />
+          <div className="relative mx-auto text-gray-600 ml-24">
+            <form onSubmit={handleSubmit}>
+              <input
+                className="border-2 border-[#FFFFFF] bg-[#F3E9E9] w-[500px] placeholder:text-blue-gray-900 h-10 px-5 pr-16 rounded-[10px] text-base focus:outline-none"
+>>>>>>> 7ac991d (uy)
                 type="search"
                 name="search"
                 value={place}
@@ -66,10 +83,16 @@ const FloatingNavBar = ({ onSearch, suggestions = [], fetchSuggestions }) => {
                 placeholder="Search"
                 autoComplete="off"
               />
+<<<<<<< HEAD
 
               <button
                 type="submit"
                 className="absolute right-0 top-0  mt-[15px] mr-4"
+=======
+              <button
+                type="submit"
+                className="absolute right-0 top-0 mt-[15px] mr-4"
+>>>>>>> 7ac991d (uy)
               >
                 <svg
                   className="text-gray-600 h-4 w-4 fill-current"
@@ -83,7 +106,11 @@ const FloatingNavBar = ({ onSearch, suggestions = [], fetchSuggestions }) => {
               </button>
             </form>
             {showSuggestions && suggestions.length > 0 && (
+<<<<<<< HEAD
               <ul className="absolute left-0 w-full lg:w-[500px] md:w-[400px] sm:w-[300px] xs:w-[250px] bg-white border border-gray-300 rounded-md max-h-48 overflow-y-auto mt-1 z-10">
+=======
+              <ul className="absolute left-0 w-[500px] bg-white border border-gray-300 rounded-md max-h-48 overflow-y-auto mt-1 z-10">
+>>>>>>> 7ac991d (uy)
                 {suggestions.map((suggestion, index) => (
                   <li
                     key={index}
@@ -99,6 +126,7 @@ const FloatingNavBar = ({ onSearch, suggestions = [], fetchSuggestions }) => {
         </div>
 
         <div className="mr-4 flex items-center">
+<<<<<<< HEAD
           <button
             className="text-gray-600 pl-4 focus:outline-none lg:hidden"
             onClick={toggleMobileMenu}
@@ -169,6 +197,20 @@ const FloatingNavBar = ({ onSearch, suggestions = [], fetchSuggestions }) => {
             </p>
             <ProfileMenu />
           </div>
+=======
+          <div className="flex items-center gap-x-10 mr-24">
+            <p className="text-lg relative text-gray-900 after:bg-blue-gray-900 after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer">
+              <Link to="/">Home</Link>
+            </p>
+            <p className="text-lg relative text-gray-900 after:bg-blue-gray-900 after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer">
+              <Link to="/about">About Us</Link>
+            </p>
+            <p className="text-lg relative text-gray-900 after:bg-blue-gray-900 after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer">
+              <Link to="/contact">Contact Us</Link>
+            </p>
+          </div>
+          <ProfileMenu />
+>>>>>>> 7ac991d (uy)
         </div>
       </div>
     </div>

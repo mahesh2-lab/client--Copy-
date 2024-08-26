@@ -3,6 +3,7 @@ import React from "react";
 import useSignup from "../hooks/useSignup";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+<<<<<<< HEAD
 import { Input, Select, Option } from "@material-tailwind/react";
 import { Helmet } from "react-helmet";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
@@ -10,6 +11,11 @@ import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 export const SignUp = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
+=======
+import { Helmet } from "react-helmet";
+
+export const SignUp = () => {
+>>>>>>> 7ac991d (uy)
   const { loading, Signup } = useSignup();
 
   const [inputs, setInputs] = useState({
@@ -23,15 +29,24 @@ export const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     // console.log(inputs);
+=======
+>>>>>>> 7ac991d (uy)
     await Signup(inputs);
   };
 
   return (
     <>
+<<<<<<< HEAD
       <Helmet>
         <title>HerGuard - SignUp</title>
       </Helmet>
+=======
+    <Helmet>
+        <title>HerGuard - SignUp</title>
+    </Helmet>
+>>>>>>> 7ac991d (uy)
       <section className="bg-white">
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
           <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
@@ -102,40 +117,96 @@ export const SignUp = () => {
                 className="mt-8 grid grid-cols-6 gap-6"
               >
                 <div className="col-span-6 sm:col-span-3">
+<<<<<<< HEAD
                   <Input
                     label="First Name"
                     required
+=======
+                  <label
+                    htmlFor="FirstName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    First Name
+                  </label>
+
+                  <input
+                    type="text"
+                    id="FirstName"
+                    name="first_name"
+>>>>>>> 7ac991d (uy)
                     value={inputs.firstName}
                     onChange={(e) =>
                       setInputs({ ...inputs, firstName: e.target.value })
                     }
+<<<<<<< HEAD
+=======
+                    className="mt-1 h-9 w-full  rounded-md border-gray-200 border bg-white text-lg px-3 text-gray-700 shadow-sm"
+>>>>>>> 7ac991d (uy)
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
+<<<<<<< HEAD
                   <Input
                     label="Last Name"
                     required
+=======
+                  <label
+                    htmlFor="LastName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Last Name
+                  </label>
+
+                  <input
+                    type="text"
+                    id="LastName"
+                    name="last_name"
+>>>>>>> 7ac991d (uy)
                     value={inputs.lastName}
                     onChange={(e) =>
                       setInputs({ ...inputs, lastName: e.target.value })
                     }
+<<<<<<< HEAD
+=======
+                    className="mt-1 w-full px-3 h-9 border rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+>>>>>>> 7ac991d (uy)
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
+<<<<<<< HEAD
                   <Input
                     label="Email"
                     required
                     type="email"
+=======
+                  <label
+                    htmlFor="Email"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    {" "}
+                    Email{" "}
+                  </label>
+
+                  <input
+                    type="email"
+                    id="Email"
+                    name="email"
+>>>>>>> 7ac991d (uy)
                     value={inputs.email}
                     onChange={(e) =>
                       setInputs({ ...inputs, email: e.target.value })
                     }
+<<<<<<< HEAD
+=======
+                    className="mt-1 w-full px-3 h-9 border rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+>>>>>>> 7ac991d (uy)
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
+<<<<<<< HEAD
                   <Select
                     label="Gender"
                     value={inputs.gender}
@@ -154,10 +225,47 @@ export const SignUp = () => {
                     size="lg"
                     placeholder="********"
                     label="Password"
+=======
+                  <label
+                    htmlFor="gender"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    {" "}
+                    Gender{" "}
+                  </label>
+                  <select
+                    name="gender"
+                    id="gender"
+                    value={inputs.gender}
+                    onChange={(e) =>
+                      setInputs({ ...inputs, gender: e.target.value })
+                    }
+                    className="mt-1 w-full px-3 h-9 border rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  >
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                  </select>
+                </div>
+
+                <div className="col-span-6 sm:col-span-3">
+                  <label
+                    htmlFor="Password"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    {" "}
+                    Password{" "}
+                  </label>
+
+                  <input
+                    type="password"
+                    id="Password"
+                    name="password"
+>>>>>>> 7ac991d (uy)
                     value={inputs.password}
                     onChange={(e) =>
                       setInputs({ ...inputs, password: e.target.value })
                     }
+<<<<<<< HEAD
                     type={passwordShown ? "text" : "password"}
                     icon={
                       <i onClick={togglePasswordVisiblity}>
@@ -168,17 +276,35 @@ export const SignUp = () => {
                         )}
                       </i>
                     }
+=======
+                    className="mt-1 w-full px-3 h-9 border rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+>>>>>>> 7ac991d (uy)
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
+<<<<<<< HEAD
                   <Input
                     placeholder="********"
                     label="Confirm Password"
+=======
+                  <label
+                    htmlFor="PasswordConfirmation"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Password Confirmation
+                  </label>
+
+                  <input
+                    type="password"
+                    id="PasswordConfirmation"
+                    name="password_confirmation"
+>>>>>>> 7ac991d (uy)
                     value={inputs.confirmPassword}
                     onChange={(e) =>
                       setInputs({ ...inputs, confirmPassword: e.target.value })
                     }
+<<<<<<< HEAD
                     type={passwordShown ? "text" : "password"}
                     icon={
                       <i onClick={togglePasswordVisiblity}>
@@ -189,6 +315,9 @@ export const SignUp = () => {
                         )}
                       </i>
                     }
+=======
+                    className="mt-1 w-full px-3 h-9 border rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+>>>>>>> 7ac991d (uy)
                   />
                 </div>
 

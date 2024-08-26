@@ -38,7 +38,11 @@ const ReportLocationForm = ({ open, onClose, onSubmit, position }) => {
     };
   
     return (
+<<<<<<< HEAD
       <Dialog open={open} className="w-16 mb-5" handler={onClose}>
+=======
+      <Dialog open={open} className="w-16" handler={onClose}>
+>>>>>>> 7ac991d (uy)
         <Card className=" ">
           <CardBody className="flex flex-col gap-3">
             <Input
@@ -52,11 +56,19 @@ const ReportLocationForm = ({ open, onClose, onSubmit, position }) => {
               value={intensity}
               onChange={(e) => setIntensity(e)}
             >
+<<<<<<< HEAD
               <Option value="1">Very Safe</Option>
               <Option value="2">Safe</Option>
               <Option value="3">Moderate</Option>
               <Option value="4">Unsafe</Option>
               <Option value="5">Very Unsafe</Option>
+=======
+              <Option value="0.0">1</Option>
+              <Option value="0.25">2</Option>
+              <Option value="0.5">3</Option>
+              <Option value="0.75">4</Option>
+              <Option value="1.0">5</Option>
+>>>>>>> 7ac991d (uy)
             </Select>
             <Textarea
               value={description}
