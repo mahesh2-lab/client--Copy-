@@ -3,6 +3,8 @@ import { useMap } from "react-leaflet";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 import L from "leaflet";
 import FloatingNavBar from "./FloatingNavBar";
+import { customIcon } from "./hoem";
+
 
 function LeafletGeoSearch({ onSearchResult }) {
   const map = useMap();
@@ -23,7 +25,7 @@ function LeafletGeoSearch({ onSearchResult }) {
             map.removeLayer(marker);
           }
 
-          const newMarker = L.marker(newCenter).addTo(map);
+          const newMarker = L.marker(newCenter, { icon: customIcon }).addTo(map);
           newMarker.bindPopup(result.label).openPopup();
           setMarker(newMarker);
 
