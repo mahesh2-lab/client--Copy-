@@ -18,7 +18,6 @@
 * {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-<<<<<<< HEAD
 }
 
 @media (max-width: 400px) {
@@ -28,6 +27,3 @@
         top: auto;    /* Reset top positioning */
     }
   }
-=======
-}
->>>>>>> 7ac991d (uy)

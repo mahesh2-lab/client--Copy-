@@ -28,11 +28,7 @@ export function ProfileMenu() {
           <div>
             <Typography variant="paragraph">
               {authUser
-<<<<<<< HEAD
-                ? authUser.firstName
-=======
-                ? authUser.firstName + " " + authUser.lastName
->>>>>>> 7ac991d (uy)
+                ? authUser.firstName 
                 : "Guest"}
             </Typography>
           </div>

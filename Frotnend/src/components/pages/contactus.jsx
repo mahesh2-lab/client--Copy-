@@ -23,8 +23,8 @@ const ContactUs = () => {
             We are always here to help you. Please feel free to contact us.
           </p>
         </div>
-        <div className="bg-gray-50 border border-l-white p-5  shadow-2xl col-span-6 grid grid-cols-6 mt-44 rounded-3xl  ">
-          <div className="bg-black py-28 col-span-3 rounded-3xl">
+        <div className="bg-gray-50 border border-l-white p-5  shadow-2xl col-span-6 below-400px:col-span-4 grid below-400px:grid-cols-4 grid-cols-6 mt-44 rounded-3xl  ">
+          <div className="bg-black py-28 col-span-3 below-400px:col-span-4  rounded-3xl">
             <h3 className="text-white px-24 text-4xl font-bold text-pretty">
               Have any questions about the site?
             </h3>
@@ -203,8 +203,8 @@ const ContactUs = () => {
               </li>
             </ul>
           </div>
-          <div className=" pt-28 px-24 grid grid-cols-6 grid-rows-5 gap-x-10 col-span-3 p-5">
-            <div className="relative h-11 col-span-3">
+          <div className=" pt-28 px-24 grid grid-cols-6 grid-rows-5 below-400px:col-span-4 below-400px:grid-cols-4 gap-x-10 col-span-3 p-5">
+            <div className="relative h-11 col-span-3 below-400px:col-span-4">
               <Input
                 variant="static"
                 label="First Name"

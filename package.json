@@ -10,8 +10,8 @@
     "start": "node Backend/server.js",
     "build": "npm i && npm i --force --prefix Frotnend && npm run build --prefix Frotnend"
   },
-  
   "dependencies": {
+    "@heroicons/react": "^2.1.5",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",

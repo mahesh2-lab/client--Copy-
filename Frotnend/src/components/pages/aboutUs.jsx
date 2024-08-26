@@ -2,7 +2,6 @@ import React from "react";
 import FloatingNavBar from "../FloatingNavBar";
 import { Helmet } from "react-helmet";
 import Footer from "../Footer";
-
 import {
   Card,
   CardHeader,
@@ -47,42 +46,38 @@ const AboutUs = () => {
   return (
     <>
       <Helmet>
-        <title>HearGuard AboutUs</title>
+        <title>HearGuard About Us</title>
       </Helmet>
       <FloatingNavBar />
-      <div className=" w-4/6 bg-[#fefff9] mx-auto gap-y-10 grid grid-cols-6 mt-40 mb-40">
-        <div className=" shadow-md rounded-3xl py-32 px-24 col-span-6 bg-[#f3f8e2] text-center">
-          <h1
-            className="text-8xl font-black leading-tight text-inherit text-pretty "
-            style={{ fontFamily: "Reservation Wide,sans-serif" }}
-          >
+      <div className="bg-[#fefff9] w-4/6 md:w-4/6  sm:w-[97%]  below-400px:w-full below-540px:w-[99%] mx-auto gap-y-10 mt-40 mb-40 px-4 sm:px-6 lg:px-8">
+        <div className="shadow-md rounded-3xl py-12 px-6 sm:py-24 sm:px-12 bg-[#f3f8e2] text-center">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black leading-tight text-inherit text-pretty below-540px:text-wrap"
+              style={{ fontFamily: "Reservation Wide,sans-serif" }}>
             Empowering Safety for All
           </h1>
-          <p className="text-2xl font-medium leading-8 m-0 text-inherit mt-4">
+          <p className="text-lg sm:text-xl md:text-2xl font-medium leading-8 mt-4">
             HerGuard is dedicated to{" "}
-            <b className=" text-[0.85em]">
-              creating safer environments by providing real-time insights{" "}
+            <b className="text-[0.85em]">
+              creating safer environments by providing real-time insights
             </b>
           </p>
         </div>
-        <div className="col-span-6 shadow-md bg-amber-200 rounded-3xl p-10 h-[500px] flex gap-x-12">
+        <div className="shadow-md bg-amber-200 rounded-3xl p-6  h-auto flex below-540px:flex-col  flex-col  sm:flex-row gap-y-6 sm:gap-x-12 mt-10">
           <img
             src="https://plit.ac.in/wp-content/uploads/2024/05/jsir.jpg"
-            className="rounded-3xl w-96 object-cover h-full"
+            className="rounded-3xl w-full sm:w-96 object-cover below-540px:w-full"
             alt=""
           />
-          <div className="flex flex-col gap-4 ">
-            <h1
-              className="text-5xl text-center font-black leading-tight text-inherit text-pretty "
-              style={{ fontFamily: "Reservation Wide,sans-serif" }}
-            >
+          <div className="flex flex-col gap-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-center text-inherit text-pretty"
+                style={{ fontFamily: "Reservation Wide,sans-serif" }}>
               Our Mentor
             </h1>
-            <h3 className="text-left text-2xl font-bold">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold">
               Dr. Pradip M Jawandhiya,
-              <p className="text-lg font-medium"> Principal, PLITMS</p>
+              <p className="text-base sm:text-lg font-medium">Principal, PLITMS</p>
             </h3>
-            <p className="text-xl font-medium leading-8 m-0 text-inherit mt-4">
+            <p className="text-base sm:text-lg md:text-xl w-11/12 font-medium leading-8">
               Dr. Pradip M Jawandhiya is a distinguished academic leader and
               mentor with extensive qualifications and experience. With a
               Bachelor of Engineering (BE), Master of Engineering (ME), a
@@ -97,19 +92,19 @@ const AboutUs = () => {
             </p>
           </div>
         </div>
-        <div className="col-span-6" id="team">
-          <h1 className="text-center text-6xl font-bold text-gray-800">
+        <div className="text-center mt-12">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800">
             Our Team
           </h1>
         </div>
-        <div className="col-span-6 grid grid-cols-6 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
           {data.map((item, index) => (
-            <Card className="col-span-2 " key={index}>
-              <CardHeader floated={false} className="h-96">
-                <img src={item.image} className="h-full w-full" alt="profile-picture" />
+            <Card className="w-full" key={index}>
+              <CardHeader floated={false} className="sm:h-60 md:h-96">
+                <img src={item.image} className="h-full w-full object-cover" alt="profile-picture" />
               </CardHeader>
               <CardBody className="text-center">
-                <Typography variant="h4" color="blue-gray" className="mb-2">
+                <Typography variant="h5" color="blue-gray" className="mb-2">
                   {item.name}
                 </Typography>
                 <Typography
@@ -130,5 +125,3 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
-
-//  creating safer environments by providing real-time insights and empowering communities.

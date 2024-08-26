@@ -5,16 +5,13 @@
   "type": "module",
   "proxy": "http://localhost:3000",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build ",
+    "dev": "vite --host",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
-     "@heroicons/react": "^2.1.5",
-=======
->>>>>>> 7ac991d (uy)
+    "@heroicons/react": "^2.1.5",
     "@material-tailwind/react": "^2.1.9",
     "@react-google-maps/api": "^2.19.3",
     "dotenv": "^16.4.5",
@@ -27,13 +24,7 @@
     "react-hot-toast": "^2.4.1",
     "react-leaflet": "^4.2.1",
     "react-leaflet-heatmap-layer-v3": "^3.0.3-beta-1",
-<<<<<<< HEAD
-    "react-router-dom": "^6.26.1",
-    "vite": "^5.4.1"
-=======
     "react-router-dom": "^6.26.1"
->>>>>>> 7ac991d (uy)
-
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

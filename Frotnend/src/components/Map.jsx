@@ -9,10 +9,6 @@ import {
 } from "react-leaflet";
 import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import "leaflet/dist/leaflet.css";
-<<<<<<< HEAD
-=======
-import { Detail } from "./detail"; // Assuming this is a component
->>>>>>> 7ac991d (uy)
 import L from "leaflet";
 import useGeoLocation from "../hooks/useGeolocation";
 import { customIcon } from "./hoem";
@@ -81,7 +77,6 @@ const Map = () => {
   const [reporting, setReporting] = useState(false);
   const { load, SendReport } = usereport();
   const {loading,  heatdata } = useGetHeatmap();
-<<<<<<< HEAD
   const location = useGeoLocation();
 
   if (location.permission === "denied") {
@@ -93,11 +88,6 @@ const Map = () => {
   } 
     const initialCenter = [location.coordinates.lat, location.coordinates.lng];
   
-=======
-
-  const initialCenter = defaultCenter;
-
->>>>>>> 7ac991d (uy)
   const toggleReporting = () => {
     setReporting(!reporting);
 
@@ -208,11 +198,7 @@ const Map = () => {
             bgColor={reporting}
           />
 
-<<<<<<< HEAD
           
-=======
-          <Detail />
->>>>>>> 7ac991d (uy)
         </MapContainer> 
       
 

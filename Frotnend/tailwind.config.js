@@ -8,7 +8,6 @@ module.exports = withMT({
     "path-to-your-node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-<<<<<<< HEAD
     screens: {
       'below-400px': {'max': '400px'},
       'below-540px': {'max': '540px'},
@@ -16,9 +15,3 @@ module.exports = withMT({
   },
   plugins: [],
 });
-=======
-    extend: {},
-  },
-  plugins: [],
-});
->>>>>>> 7ac991d (uy)
