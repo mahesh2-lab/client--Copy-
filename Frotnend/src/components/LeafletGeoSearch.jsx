@@ -4,8 +4,6 @@ import { OpenStreetMapProvider } from "leaflet-geosearch";
 import L from "leaflet";
 import FloatingNavBar from "./FloatingNavBar";
 
-import {seachicon} from './hoem.js';
-
 function LeafletGeoSearch({ onSearchResult }) {
   const map = useMap();
   const provider = new OpenStreetMapProvider();
@@ -25,7 +23,7 @@ function LeafletGeoSearch({ onSearchResult }) {
             map.removeLayer(marker);
           }
 
-          const newMarker = L.marker(newCenter, { seachicon }).addTo(map);
+          const newMarker = L.marker(newCenter).addTo(map);
           newMarker.bindPopup(result.label).openPopup();
           setMarker(newMarker);
 
