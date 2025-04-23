@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import {
   MapContainer,
   TileLayer,
   Marker,
   Popup,
-  useMap,
   useMapEvents,
 } from "react-leaflet";
 import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
 import useGeoLocation from "../hooks/useGeolocation";
-import { customIcon } from "./hoem";
 import LeafletGeoSearch from "./LeafletGeoSearch";
 import ReportLocationForm from "./ReportLocationForm";
 import CenterButton from "./CenterBtn";
 import usereport from "../hooks/useReport";
 import useGetHeatmap from "../hooks/useGetHeatmap";
-import icon from "./icon";
 import toast from "react-hot-toast";
+import customIcon from "./icon";  
+import icon from "./icon"
+import LocationMarker from "./LocationMarker";
 import { Spinner } from "@material-tailwind/react";
 
-const defaultCenter = [20.536846, 76.18087];
+const defaultCenter = [20.536846, 76.18087]; // Fallback coordinates
 
 const heatmapOptions = {
   radius: 20,
@@ -35,6 +34,7 @@ const heatmapOptions = {
     1.0: "#FF0000",
   },
 };
+
 const getStatus = (intensity) => {
   if (intensity <= 1) return "Very Safe";
   if (intensity <= 2) return "Safe";
@@ -42,32 +42,6 @@ const getStatus = (intensity) => {
   if (intensity <= 4) return "Unsafe";
   return "Very Unsafe";
 };
-function LocationMarker() {
-  const location = useGeoLocation();
-  const map = useMap();
-
-  useEffect(() => {
-    if (!location.loaded) return;
-
-    if (location.permission === "denied") {
-      toast.error("Please enable location services.");
-    } else if (location.permission === "unsupported") {
-      toast.error("Location services are not supported by your browser.");
-    } else if (location.error) {
-      toast.error("Error:", location.error.message);
-    } else {
-      const newPosition = [location.coordinates.lat, location.coordinates.lng];
-      map.flyTo(newPosition, 13);
-
-      L.marker(newPosition, { icon: customIcon })
-        .addTo(map)
-        .bindPopup("You are here.")
-        .openPopup();
-    }
-  }, [map, location]);
-
-  return null;
-}
 
 const Map = () => {
   const [reportedLocations, setReportedLocations] = useState([]);
@@ -76,137 +50,167 @@ const Map = () => {
   const [position, setPosition] = useState(null);
   const [reporting, setReporting] = useState(false);
   const { load, SendReport } = usereport();
-  const {loading,  heatdata } = useGetHeatmap();
-  const location = useGeoLocation();
+  const { loading, heatdata } = useGetHeatmap();
+  const location = useGeoLocation(); // Custom hook to get user's current location
+  const mapRef = useRef(null);
 
-  if (location.permission === "denied") {
-    toast.error("Please enable location services.");
-  } else if (location.permission === "unsupported") {
-    toast.error("Location services are not supported by your browser.");
-  } else if (location.error) {
-    toast.error("Error:", location.error.message);
-  } 
-    const initialCenter = [location.coordinates.lat, location.coordinates.lng];
-  
+  // Memoize the user's initial location to prevent recalculations
+  const initialCenter = useMemo(() => {
+    // Fallback to default coordinates if the current location isn't available
+    return location.loaded && location.coordinates
+      ? [location.coordinates.lat, location.coordinates.lng]
+      : defaultCenter;
+  }, [location]);
+
   const toggleReporting = () => {
-    setReporting(!reporting);
-
+    setReporting((prev) => !prev);
     setPosition(null);
   };
 
-  const MapClickHandler = () => {
-    if (reporting === true) {
-      useMapEvents({
-        click: (e) => {
-          setFormLocation(e.latlng); // Store click ed location
-          setIsDialogOpen(true); // Open the dialog
-          setPosition(e.latlng);
-        },
-      });
+  const saveMapState = () => {
+    if (mapRef.current) {
+      const map = mapRef.current;
+      const mapCenter = map.getCenter();
+      const mapZoom = map.getZoom();
+      sessionStorage.setItem(
+        "mapState",
+        JSON.stringify({
+          center: [mapCenter.lat, mapCenter.lng],
+          zoom: 20,
+        })
+      );
     }
+  };
 
-    return null;
+  const getSavedMapState = () => {
+    const savedState = sessionStorage.getItem("mapState");
+    if (savedState) {
+      return JSON.parse(savedState);
+    }
+    return { center: defaultCenter, zoom: 20 }; // Fallback to default values
   };
-  const handleFormSubmit = async (formData) => {
-    await SendReport([
-      { lat: formLocation.lat, lng: formLocation.lng, ...formData },
-    ]);
-    setReportedLocations([
-      ...reportedLocations,
-      { lat: formLocation.lat, lng: formLocation.lng, ...formData },
-    ]);
-    setFormLocation(null);
-    setIsDialogOpen(false);
-    setReporting(false);
-  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      if (!loading) {
-       
-       await setReportedLocations(heatdata.map((data) => ({
+    window.addEventListener("beforeunload", saveMapState);
+    return () => {
+      window.removeEventListener("beforeunload", saveMapState);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!loading && Array.isArray(heatdata)) {
+      setReportedLocations(
+        heatdata.map((data) => ({
           lat: data.lat,
           lng: data.lng,
           intensity: data.intensity,
           name: data.name,
           type: data.type,
           description: data.description,
-        })));
-      }
-    };
-
-    fetchData();
+        }))
+      );
+    } else {
+      setReportedLocations([]);
+    }
   }, [loading, heatdata]);
+
+  const handleFormSubmit = async (formData) => {
+    await SendReport([
+      { lat: formLocation.lat, lng: formLocation.lng, ...formData },
+    ]);
+    setReportedLocations((prev) => [
+      ...prev,
+      { lat: formLocation.lat, lng: formLocation.lng, ...formData },
+    ]);
+    setFormLocation(null);
+    setIsDialogOpen(false);
+    setReporting(false);
+  };
+
+  const savedState = getSavedMapState();
+
+  const MapClickHandler = () => {
+    if (reporting) {
+      useMapEvents({
+        click: (e) => {
+          setFormLocation(e.latlng);
+          setIsDialogOpen(true);
+          setPosition(e.latlng);
+        },
+      });
+    }
+    return null;
+  };
 
   return (
     <div className="relative w-full h-screen">
-      
-        <MapContainer
-          center={initialCenter}
-          zoom={13}
-          minZoom={6}
-          className="w-full h-full"
-          zoomControl={true}
-          preferCanvas={true} // Use Canvas renderer for performance
-        >
-          <LeafletGeoSearch
-            onSearchResult={(newCenter) => {
-              // Handle any additional logic when a new location is found
-            }}
-            onReportLocation={toggleReporting}
-          />
-          {loading ? (
-        <div className=" flex justify-center h-full items-center">
-          <Spinner color="blue" size="large" className="h-14 w-14"/>
-        </div>
-      ) : (
-        <>
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            maxZoom={19} // Set a reasonable maxZoom for performance
-          />
-          <HeatmapLayer
-            points={reportedLocations}
-            latitudeExtractor={(point) => point.lat}
-            longitudeExtractor={(point) => point.lng}
-            intensityExtractor={(point) => point.intensity}
-            radius={heatmapOptions.radius}
-            blur={heatmapOptions.blur}
-            maxZoom={heatmapOptions.maxZoom}
-            gradient={heatmapOptions.gradient}
-          />
-          <MapClickHandler />
-          {reportedLocations.map((location, index) => (
-            <Marker key={index} position={[location.lat, location.lng]} icon={icon}>
-              <Popup>
-                <strong>{location.name}</strong>
-                <br />
-                Type: {location.type}
-                <br />
-                Description: {location.description}
-                <br />
-                Status: {getStatus(location.intensity)}
-              </Popup>
-            </Marker>
-          ))}
-          <LocationMarker />
+      <MapContainer
+        center={savedState.center || initialCenter} // Set the initial center to the user's location
+        zoom={savedState.zoom || 20}
+        minZoom={6}
+        className="w-full h-full"
+        zoomControl={true}
+        preferCanvas={true}
+        whenCreated={(map) => (mapRef.current = map)}
+      >
+        <LeafletGeoSearch
+          onSearchResult={(newCenter) => {}}
+          onReportLocation={toggleReporting}
+        />
+        {loading ? (
+          <div className="flex justify-center h-full items-center">
+            <Spinner color="blue" size="large" className="h-14 w-14" />
+          </div>
+        ) : (
+          <>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              maxZoom={19}
+            />
+            {reportedLocations.length > 0 && (
+              <HeatmapLayer
+                points={reportedLocations}
+                latitudeExtractor={(point) => point.lat}
+                longitudeExtractor={(point) => point.lng}
+                intensityExtractor={(point) => point.intensity}
+                radius={heatmapOptions.radius}
+                blur={heatmapOptions.blur}
+                maxZoom={heatmapOptions.maxZoom}
+                gradient={heatmapOptions.gradient}
+              />
+            )}
+            <MapClickHandler />
+            {reportedLocations.map((location, index) => (
+              <Marker key={index} position={[location.lat, location.lng]} icon={icon}>
+                <Popup>
+                  <strong>{location.name}</strong>
+                  <br />
+                  Type: {location.type}
+                  <br />
+                  Description: {location.description}
+                  <br />
+                  Status: {getStatus(location.intensity)}
+                </Popup>
+              </Marker>
+            ))}
+            <LocationMarker />
           </>
-          )}
-          <CenterButton
-            center={initialCenter}
-            zoom={13}
-            tooglereport={toggleReporting}
-            bgColor={reporting}
-          />
-
-          
-        </MapContainer> 
-      
+        )}
+        <CenterButton
+          center={initialCenter}
+          zoom={15}
+          tooglereport={toggleReporting}
+          bgColor={reporting}
+        />
+      </MapContainer>
 
       {formLocation && (
         <ReportLocationForm
           open={isDialogOpen}
-          onClose={() => {setIsDialogOpen(false) 
-            setReporting(false)}}
+          onClose={() => {
+            setIsDialogOpen(false);
+            setReporting(false);
+          }}
           onSubmit={handleFormSubmit}
           position={position}
         />

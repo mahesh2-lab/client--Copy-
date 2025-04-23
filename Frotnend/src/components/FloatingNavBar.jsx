@@ -25,6 +25,8 @@ const FloatingNavBar = ({ onSearch, suggestions = [], fetchSuggestions }) => {
 
   const handleSuggestionClick = (suggestion) => {
     setPlace(suggestion);
+    console.log(suggestion);
+    
     onSearch(suggestion);
     setShowSuggestions(false);
   };

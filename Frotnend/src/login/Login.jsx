@@ -88,8 +88,9 @@ export const Login = () => {
 
             <form
               onSubmit={handleSubmit}
-              className="mt-8 grid grid-cols-6 gap-6"
+              className="mt-8 grid grid-cols-6 gap-6 shadow-md px-7 rounded-md border py-9 border-gray-200 bg-white"
             >
+              <h2 className="text-4xl col-span-6 font-bold">Login</h2>
               <div className="col-span-6 ">
                 <label
                   htmlFor="Email"
