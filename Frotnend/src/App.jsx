@@ -7,6 +7,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import AboutUs from "./components/pages/aboutUs";
 import ContactUs from "./components/pages/contactus";
+import Welcome from "./welcome";
 
 function App() {
   const { authUser } = useAuthContext();
@@ -17,11 +18,15 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={authUser ? <Map /> : <Navigate to={"/login"} />}
+            element={authUser ? <Map /> : <Navigate to={"/welcome"} />}
           />
           <Route
             path="/signup"
             element={authUser ? <Navigate to="/" /> : <SignUp />}
+          />
+          <Route
+            path="/welcome"
+            element={<Welcome />}
           />
           <Route
             path="/login"

@@ -63,13 +63,13 @@ const AboutUs = () => {
             Empowering Safety for All
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl font-medium leading-8 mt-4">
-            HerGuard is dedicated to{" "}
+            safeGuard is dedicated to{" "}
             <b className="text-[0.85em]">
               creating safer environments by providing real-time insights
             </b>
           </p>
         </div>
-        <div className="shadow-md bg-amber-200 rounded-3xl p-6  h-auto flex below-540px:flex-col  flex-col  sm:flex-row gap-y-6 sm:gap-x-12 mt-10">
+        {/* <div className="shadow-md bg-amber-200 rounded-3xl p-6  h-auto flex below-540px:flex-col  flex-col  sm:flex-row gap-y-6 sm:gap-x-12 mt-10">
           <img
             src="https://plit.ac.in/wp-content/uploads/2024/05/jsir.jpg"
             className="rounded-3xl w-full sm:w-96 object-cover below-540px:w-full"
@@ -102,7 +102,7 @@ const AboutUs = () => {
               and support.
             </p>
           </div>
-        </div>
+        </div> */}
         <div className="text-center mt-12">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800">
             Our Team
@@ -122,13 +122,7 @@ const AboutUs = () => {
                 <Typography variant="h5" color="blue-gray" className="mb-2">
                   {item.name}
                 </Typography>
-                <Typography
-                  color="blue-gray"
-                  className="font-medium"
-                  textGradient
-                >
-                  {item.role}
-                </Typography>
+              
               </CardBody>
             </Card>
           ))}
