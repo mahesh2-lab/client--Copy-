@@ -23,27 +23,22 @@ const data = [
   {
     name: "Ms. Mayuri Deshmukh ",
     role: "Not defined",
-    image:
-      "./photos/photo3.jpg",
+    image: "./photos/photo3.jpg",
   },
   {
     name: "Ms. Pallavi Ubarhande",
     role: "Not defined",
-    image:
-    "./photos/photo4.jpg",
-
+    image: "./photos/photo4.jpg",
   },
   {
     name: "Ms. Shreya Vaishnav",
     role: "Not defined",
-    image:
-      "./photos/photo5.jpg",
+    image: "./photos/photo5.jpg",
   },
   {
     name: "Mr. Ritesh Deokar",
     role: "Not defined",
-    image:
-      "./photos/photo6.jpg",
+    image: "./photos/photo6.jpg",
   },
 ];
 
@@ -69,9 +64,9 @@ const AboutUs = () => {
             </b>
           </p>
         </div>
-        {/* <div className="shadow-md bg-amber-200 rounded-3xl p-6  h-auto flex below-540px:flex-col  flex-col  sm:flex-row gap-y-6 sm:gap-x-12 mt-10">
+        <div className="shadow-md bg-amber-200 rounded-3xl p-6  h-auto flex below-540px:flex-col  flex-col  sm:flex-row gap-y-6 sm:gap-x-12 mt-10">
           <img
-            src="https://plit.ac.in/wp-content/uploads/2024/05/jsir.jpg"
+            src="/photos/priyanka.jpg"
             className="rounded-3xl w-full sm:w-96 object-cover below-540px:w-full"
             alt=""
           />
@@ -83,26 +78,16 @@ const AboutUs = () => {
               Our Mentor
             </h1>
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold">
-              Dr. Pradip M Jawandhiya,
+              Prof. Priyanka Kharche, M.E.
               <p className="text-base sm:text-lg font-medium">
-                Principal, PLITMS
+                Professer in Computer science, PLITMS
               </p>
             </h3>
             <p className="text-base sm:text-lg md:text-xl w-11/12 font-medium leading-8">
-              Dr. Pradip M Jawandhiya is a distinguished academic leader and
-              mentor with extensive qualifications and experience. With a
-              Bachelor of Engineering (BE), Master of Engineering (ME), a
-              Doctorate (PhD), and a Master of Business Administration (MBA)
-              specializing in Human Resource Management (HRM), Dr. Jawandhiya
-              has cultivated a deep understanding of both technical and
-              managerial aspects of education. As a Principal, he has guided
-              numerous students and professionals, fostering innovation,
-              leadership, and excellence. His mentorship is instrumental in
-              shaping the success of our project, providing valuable insights
-              and support.
+             Prof. Priyanka Kharche, M.E., served as the esteemed mentor for our project. With her deep knowledge and experience in engineering, she provided us with invaluable guidance and constant support throughout the development process. Her encouragement, insightful suggestions, and dedication greatly contributed to the success of our project. We are truly grateful for her mentorship and the inspiration she provided at every stage.
             </p>
           </div>
-        </div> */}
+        </div>
         <div className="text-center mt-12">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800">
             Our Team
@@ -122,7 +107,6 @@ const AboutUs = () => {
                 <Typography variant="h5" color="blue-gray" className="mb-2">
                   {item.name}
                 </Typography>
-              
               </CardBody>
             </Card>
           ))}
