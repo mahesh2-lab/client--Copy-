@@ -22,18 +22,7 @@ import { Spinner } from "@material-tailwind/react";
 
 const defaultCenter = [20.536846, 76.18087]; // Fallback coordinates
 
-const heatmapOptions = {
-  radius: 20,
-  blur: 10,
-  maxZoom: 17,
-  gradient: {
-    0.0: "#0000FF",
-    0.25: "#008000",
-    0.5: "#FFFF00",
-    0.75: "#FFA500",
-    1.0: "#FF0000",
-  },
-};
+
 
 const getStatus = (intensity) => {
   if (intensity <= 1) return "Very Safe";
@@ -172,11 +161,10 @@ const Map = () => {
                 points={reportedLocations}
                 latitudeExtractor={(point) => point.lat}
                 longitudeExtractor={(point) => point.lng}
-                intensityExtractor={(point) => point.intensity}
-                radius={heatmapOptions.radius}
-                blur={heatmapOptions.blur}
-                maxZoom={heatmapOptions.maxZoom}
-                gradient={heatmapOptions.gradient}
+                intensityExtractor={(point) => point.intensity / 5} // Normalize intensity (assuming max intensity is 5)
+                radius={20} // Adjust radius as needed
+                blur={15} // Adjust blur as needed
+                maxZoom={19} // Ensure maxZoom matches your TileLayer's maxZoom
               />
             )}
             <MapClickHandler />
