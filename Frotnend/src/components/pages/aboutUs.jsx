@@ -58,7 +58,7 @@ const AboutUs = () => {
             Empowering Safety for All
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl font-medium leading-8 mt-4">
-            safeGuard is dedicated to{" "}
+            HerGuard is dedicated to{" "}
             <b className="text-[0.85em]">
               creating safer environments by providing real-time insights
             </b>
