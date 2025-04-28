@@ -29,6 +29,12 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
+    },
+    rating: {
+        type: Number,
+        required: false,
+        min: 0,
+        max: 5,
     }
 
 }, { timestamps: true });

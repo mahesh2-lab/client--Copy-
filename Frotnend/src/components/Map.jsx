@@ -22,8 +22,6 @@ import { Spinner } from "@material-tailwind/react";
 
 const defaultCenter = [20.536846, 76.18087]; // Fallback coordinates
 
-
-
 const getStatus = (intensity) => {
   if (intensity <= 1) return "Very Safe";
   if (intensity <= 2) return "Safe";
@@ -45,7 +43,6 @@ const Map = () => {
 
   // Memoize the user's initial location to prevent recalculations
   const initialCenter = useMemo(() => {
-    // Fallback to default coordinates if the current location isn't available
     return location.loaded && location.coordinates
       ? [location.coordinates.lat, location.coordinates.lng]
       : defaultCenter;
@@ -88,6 +85,7 @@ const Map = () => {
 
   useEffect(() => {
     if (!loading && Array.isArray(heatdata)) {
+      const storedRatings = JSON.parse(localStorage.getItem("ratings")) || {};
       setReportedLocations(
         heatdata.map((data) => ({
           lat: data.lat,
@@ -96,6 +94,7 @@ const Map = () => {
           name: data.name,
           type: data.type,
           description: data.description,
+          ratings: storedRatings[`${data.lat},${data.lng}`] || [],
         }))
       );
     } else {
@@ -109,11 +108,33 @@ const Map = () => {
     ]);
     setReportedLocations((prev) => [
       ...prev,
-      { lat: formLocation.lat, lng: formLocation.lng, ...formData },
+      { lat: formLocation.lat, lng: formLocation.lng, ...formData, ratings: [] },
     ]);
     setFormLocation(null);
     setIsDialogOpen(false);
     setReporting(false);
+  };
+
+  const handleRatingSubmit = (index, rating) => {
+    setReportedLocations((prev) => {
+      const updatedLocations = [...prev];
+      updatedLocations[index].ratings.push(rating);
+
+      const storedRatings = JSON.parse(localStorage.getItem("ratings")) || {};
+      const locationKey = `${updatedLocations[index].lat},${updatedLocations[index].lng}`;
+      storedRatings[locationKey] = updatedLocations[index].ratings;
+      localStorage.setItem("ratings", JSON.stringify(storedRatings));
+
+      return updatedLocations;
+    });
+    toast.success("Rating submitted!");
+  };
+
+  const calculateAverageRating = (ratings) => {
+    if (!Array.isArray(ratings)) return "No ratings yet";
+    if (ratings.length === 0) return "No ratings yet";
+    const sum = ratings.reduce((acc, curr) => acc + curr, 0);
+    return (sum / ratings.length).toFixed(1);
   };
 
   const savedState = getSavedMapState();
@@ -134,9 +155,9 @@ const Map = () => {
   return (
     <div className="relative w-full h-screen">
       <MapContainer
-        center={savedState.center || initialCenter} // Set the initial center to the user's location
-        zoom={savedState.zoom || 20}
-        minZoom={6}
+        center={savedState.center || initialCenter}
+        zoom={savedState.zoom || 2}
+        minZoom={0}
         className="w-full h-full"
         zoomControl={true}
         preferCanvas={true}
@@ -153,18 +174,18 @@ const Map = () => {
         ) : (
           <>
             <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              maxZoom={19}
+              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+              maxZoom={99}
             />
             {reportedLocations.length > 0 && (
               <HeatmapLayer
                 points={reportedLocations}
                 latitudeExtractor={(point) => point.lat}
                 longitudeExtractor={(point) => point.lng}
-                intensityExtractor={(point) => point.intensity / 5} // Normalize intensity (assuming max intensity is 5)
-                radius={20} // Adjust radius as needed
-                blur={15} // Adjust blur as needed
-                maxZoom={19} // Ensure maxZoom matches your TileLayer's maxZoom
+                intensityExtractor={(point) => point.intensity / 5}
+                radius={20}
+                blur={15}
+                maxZoom={19}
               />
             )}
             <MapClickHandler />
@@ -178,6 +199,33 @@ const Map = () => {
                   Description: {location.description}
                   <br />
                   Status: {getStatus(location.intensity)}
+                  <br />
+                  Average Rating: {calculateAverageRating(location.ratings)}
+                  <br />
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const rating = parseInt(e.target.rating.value, 10);
+                      if (rating >= 1 && rating <= 5) {
+                        handleRatingSubmit(index, rating);
+                        e.target.reset();
+                      } else {
+                        toast.error("Please enter a rating between 1 and 5.");
+                      }
+                    }}
+                  >
+                    <label>
+                      Rate (1-5):{" "}
+                      <input
+                        type="number"
+                        name="rating"
+                        min="1"
+                        max="5"
+                        required
+                      />
+                    </label>
+                    <button type="submit">Submit</button>
+                  </form>
                 </Popup>
               </Marker>
             ))}
